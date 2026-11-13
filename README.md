@@ -1,147 +1,130 @@
 # QuickBasket ⚡ 10-Minute Grocery Delivery Platform
 
-**QuickBasket** is a modern, responsive online grocery delivery web application inspired by **Zepto**, **Blinkit**, and **BigBasket**. Built with a high-performance React + Vite frontend, Tailwind CSS, Express.js backend, and MongoDB database.
+**QuickBasket** is a complete, modern, responsive full-stack online grocery delivery web application inspired by **Zepto**, **Blinkit**, and **BigBasket**. Built as a unified **Next.js 14 (App Router)** platform with Express.js APIs, MongoDB database, Leaflet GPS geolocation mapping, and Razorpay/UPI checkout.
 
 ---
 
-## 🚀 Live Demo & Access
+## 📁 Unified Single-Folder Structure
 
-- **Frontend Application:** `http://localhost:3000`
-- **Backend API:** `http://localhost:5000/api`
-- **Health Check:** `http://localhost:5000/api/health`
+Everything in QuickBasket lives in this single repository:
+
+```
+├── app/                  # Next.js 14 App Router (all pages & layouts)
+│   ├── page.jsx          # Storefront (Hero, Categories, Deals, Aisles)
+│   ├── products/         # Catalog & Zepto-style filter modal
+│   ├── product/[id]/     # Product details with pack size selector
+│   ├── cart/             # Shopping basket & delivery progress bar
+│   ├── checkout/         # GPS location, interactive map & payment
+│   ├── order-success/    # Confirmation banner & live tracking link
+│   ├── order-tracking/   # 5-stage live rider GPS route tracking
+│   ├── dashboard/        # User profile, addresses, orders, support
+│   ├── admin/            # Admin analytics, CRUD products, orders
+│   ├── delivery/         # Rider dashboard with active dispatches
+│   ├── login/            # Phone/Email login & demo accounts
+│   ├── register/         # User registration with password strength
+│   ├── verify-otp/       # 6-box OTP entry with countdown
+│   └── (about, contact, help, terms, privacy, apps, not-found)
+├── components/           # Modular UI widgets (cart, checkout, home, product, common)
+├── context/              # Context API (Auth, Cart, Location, Wishlist)
+├── controllers/          # Backend controllers (Auth, Products, Orders, Payments, etc.)
+├── models/               # MongoDB Mongoose schemas
+├── routes/               # Backend API endpoints
+├── middleware/           # Authentication guards & rate limiting
+├── config/               # Database and payment gateway configs
+├── utils/                # Department catalog, seeder, notifications
+├── services/             # Axios API client
+├── public/               # Static assets & brand icons
+├── server.js             # Unified full-stack server (Next.js + Express)
+├── package.json          # Single unified dependencies & scripts
+├── next.config.mjs       # Next.js configuration
+├── tailwind.config.js    # QuickBasket emerald theme
+└── .env.example          # Environment variables template
+```
 
 ---
 
-## 🔑 Demo Login Credentials (1-Click Login Available in Modal)
+## 🚀 Quick Start (One Command)
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/KondetiSantoshi/quick-basket-.git
+cd quick-basket-
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Configure environment
+Create a `.env` file in the root directory (or copy from `.env.example`):
+```env
+PORT=3000
+NODE_ENV=development
+MONGO_URI=mongodb://127.0.0.1:27017/quickbasket
+JWT_SECRET=quickbasket_ultra_secure_jwt_secret_token_2025_grocery_app
+
+# Razorpay Test Credentials
+RAZORPAY_KEY_ID=rzp_test_1DP5mmOlF5G5ag
+RAZORPAY_KEY_SECRET=rzp_test_secret_key_quickbasket_2025
+RAZORPAY_WEBHOOK_SECRET=quickbasket_webhook_secret_9988
+
+# Email & SMS
+FROM_EMAIL=no-reply@quickbasket.com
+FROM_NAME=QuickBasket Groceries
+SMS_PROVIDER=console
+```
+
+### 4. Seed sample grocery inventory (optional)
+```bash
+npm run seed
+```
+
+### 5. Run the application
+```bash
+# Starts both Express backend and Next.js frontend on http://localhost:3000
+npm run dev
+
+# Or build for production
+npm run build
+npm run start
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🔑 Demo Credentials (1-Click Login Available)
 
 | Role | Email | Password | Features Accessible |
 |---|---|---|---|
-| **Customer** | `user@quickbasket.com` | `password123` | Browsing, Cart, Checkout, Order Tracking, Profile, Addresses, Wishlist |
+| **Customer** | `user@quickbasket.com` | `password123` | Browsing, Cart, Checkout, Order Tracking, Profile, Addresses |
 | **Admin** | `admin@quickbasket.com` | `admin123` | Analytics, Product CRUD, Categories, Orders Management, Coupons |
 | **Delivery Rider** | `delivery@quickbasket.com` | `rider123` | Rider Queue, Out for Delivery, Mark Delivered, Daily Earnings |
 
-> **Tip:** You can also click the quick **"Customer"**, **"Admin"**, or **"Rider"** buttons inside the Login Modal for instant authentication!
+---
+
+## 🛒 All 12 Grocery Categories Included
+
+1. 🍎 **Fruits & Vegetables**
+2. 🥛 **Dairy, Bread & Eggs**
+3. 🌾 **Rice, Atta & Dal**
+4. 🍟 **Snacks & Munchies**
+5. 🥤 **Cold Drinks & Juices**
+6. 🥣 **Breakfast & Instant Food**
+7. 🍫 **Chocolates & Ice Cream**
+8. 🧴 **Personal Care**
+9. 🧼 **Household Essentials**
+10. 👶 **Baby Care**
+11. 🍗 **Meat & Seafood**
+12. 🍪 **Bakery & Biscuits**
 
 ---
 
-## 🛒 All 12 Required Grocery Categories
+## 💳 Payment Gateway Support
 
-1. 🍎 **Fruits & Vegetables** (Tomatoes, Onions, Apples, Bananas, Hydroponic Spinach)
-2. 🥛 **Dairy, Bread & Eggs** (Amul Taaza Milk, Amul Butter, Farm Eggs, Brown Bread, Malai Paneer)
-3. 🌾 **Rice, Atta & Dal** (Aashirvaad Chakki Atta, Fortune Basmati Rice, Tata Toor Dal, Sunflower Oil)
-4. 🍟 **Snacks & Munchies** (Lay's Magic Masala, Haldiram Aloo Bhujia, Doritos, Act II Popcorn)
-5. 🥤 **Cold Drinks & Juices** (Coca-Cola Can, Real 100% Orange Juice, Red Bull, Kinley Soda)
-6. 🥣 **Breakfast & Instant Food** (Maggi 2-Minute Noodles, Kellogg's Corn Flakes, Quaker Oats)
-7. 🍫 **Chocolates & Ice Cream** (Cadbury Dairy Milk Silk, Amul Belgian Ice Cream, Ferrero Rocher)
-8. 🧴 **Personal Care** (Dettol Soap Pack, Colgate Total Toothpaste, Dove Intense Repair Shampoo)
-9. 🧼 **Household Essentials** (Surf Excel Matic, Vim Lemon Gel, Lizol Floor Cleaner)
-10. 👶 **Baby Care** (Pampers Diaper Pants, Himalaya Baby Wipes)
-11. 🍗 **Meat & Seafood** (Fresh Chicken Curry Cut, Fresh Cleaned Prawns)
-12. 🍪 **Bakery & Biscuits** (Britannia Good Day, Parle Hide & Seek, Sunfeast Dark Fantasy)
-
----
-
-## 🎟️ Active Discount Coupons
-
-- `WELCOME50` - 50% Flat Off (up to ₹100) on first order
-- `QUICK100` - Flat ₹100 Off on orders above ₹499
-- `FREEDEL` - Free Delivery on any order size
-- `SUPER20` - 20% Off on fresh produce & dairy
-
----
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **Framework:** React 18 with Vite
-- **Styling:** Tailwind CSS with custom emerald theme (`#0c831f`)
-- **Routing:** React Router v6
-- **Icons:** Lucide React
-- **State Management:** Context API (`AuthContext`, `CartContext`, `LocationContext`, `WishlistContext`)
-- **HTTP Client:** Axios with auto-JWT authorization interceptor
-- **Celebration Effects:** Canvas-Confetti
-
-### Backend
-- **Runtime:** Node.js & Express.js (ES Modules)
-- **Database:** MongoDB with Mongoose ODM
-- **Authentication:** JSON Web Tokens (JWT) & bcryptjs password encryption
-- **Payment Integration:** Razorpay test mode mock API + UPI payment selector
-- **Logger:** Morgan HTTP logger
-
----
-
-## 📋 Key Pages & Features
-
-1. **Homepage:**
-   - 10-Minute delivery banner with dynamic location pill
-   - Real-time product search with auto-complete suggestions
-   - Promotional slider carousel with active coupon codes
-   - 12 categories circular grid with hover animations
-   - Flash Deals section with live ticking countdown clock
-   - Sections for Trending, Best Sellers, and Daily Essentials
-
-2. **Product Listing Page:**
-   - Search & dynamic multi-filter sidebar (Category, Brand checkboxes, Price range slider, In-stock toggle)
-   - Sorting by Popularity, Price (Low to High, High to Low), Discount, and Rating
-   - Instant cart quantity steppers (`- [count] +`) directly on cards
-
-3. **Product Details Page:**
-   - High-resolution product images
-   - Weight/pack size indicator
-   - Shelf life, storage instructions & country of origin
-   - Customer ratings & review submission form
-   - Related products carousel
-
-4. **Cart Drawer & Cart Page:**
-   - Slide-over drawer with free delivery progress meter ("Add ₹X for FREE Delivery")
-   - Quantity modification and instant total calculation
-   - Delivery partner tip selector
-   - Coupon code application with quick chips
-
-5. **Checkout & Payments:**
-   - Saved address selector + modal to add new addresses
-   - Delivery time slot: "Instant 10-15 mins" vs Scheduled
-   - Payment methods: UPI (GPay/PhonePe/Paytm/QR), Cards, Net Banking, COD, Razorpay sandbox
-
-6. **Live Order Tracking:**
-   - 5 Animated Stages: `Order Placed` ➔ `Order Confirmed` ➔ `Packing` ➔ `Out for Delivery` ➔ `Delivered`
-   - Real-time countdown timer
-   - Delivery partner card with electric scooter details, rider rating, and phone call link
-   - Simulated live route radar map
-   - Interactive testing buttons to advance order stages on demand
-
-7. **User Dashboard:**
-   - Profile management
-   - My Orders history with direct tracking & item receipts
-   - Saved delivery addresses management
-   - Wishlist with 1-click Add to Basket
-   - Help & Support FAQs accordion
-
-8. **Admin Dashboard:**
-   - Store KPIs: Total Revenue, Total Orders, Active Dispatches, Catalog Size
-   - Product Management: Add, Edit, Delete products with live image preview
-   - Order Management: Status update dropdown & order details
-   - Coupon Management: Create and delete promotional vouchers
-
-9. **Delivery Partner Dashboard:**
-   - Rider active delivery queue
-   - Customer location and phone dialer
-   - Quick status update buttons ("Out for Delivery", "Mark Delivered")
-   - Daily incentive earnings tracker
-
----
-
-## 🏃 Running Locally
-
-To start both servers simultaneously:
-```bash
-# In the root directory:
-npm run dev
-
-# Or run separately:
-npm run server  # starts backend on port 5000
-npm run client  # starts frontend on port 3000
-
-# To re-seed the MongoDB database:
-npm run seed
-```
+- **UPI Instant Pay:** Google Pay, PhonePe, Paytm, BHIM (via UPI ID or scan QR)
+- **Credit & Debit Cards:** Visa, Mastercard, RuPay, Amex with Luhn validation
+- **Net Banking:** HDFC, ICICI, SBI, Axis, Kotak, Yes Bank, and more
+- **Digital Wallets:** Paytm, Amazon Pay, PhonePe Wallet, MobiKwik
+- **Cash on Delivery (COD):** Pay at doorstep on arrival

@@ -1,20 +1,40 @@
 {
   "name": "quickbasket",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "QuickBasket - Modern 10-Minute Grocery Delivery Platform",
+  "type": "module",
+  "description": "QuickBasket - 10-Minute Instant Grocery Delivery Platform (Full-Stack Next.js 14)",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd backend && npm run dev",
-    "client": "cd frontend && npm run dev",
-    "next": "concurrently \"npm run server\" \"npm run next:dev\"",
-    "next:dev": "cd nextjs && npm run dev",
-    "next:build": "cd nextjs && npm run build",
-    "next:start": "cd nextjs && npm run start",
-    "seed": "cd backend && npm run seed",
-    "build": "cd frontend && npm run build"
+    "dev": "node server.js",
+    "dev:next": "next dev -p 3000",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "seed": "node utils/seeder.js",
+    "sync:catalog": "node utils/syncCatalog.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "canvas-confetti": "^1.9.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.7.3",
+    "jsonwebtoken": "^9.0.2",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.469.0",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0",
+    "next": "14.2.20",
+    "nodemailer": "^10.3.1",
+    "qrcode.react": "^4.2.0",
+    "razorpay": "^2.9.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17"
   }
 }

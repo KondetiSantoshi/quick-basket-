@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,6 +12,7 @@ module.exports = {
         brand: {
           50: '#f0fdf4',
           100: '#dcfce7',
+          150: '#e1f8e6',
           200: '#bbf7d0',
           300: '#86efac',
           400: '#4ade80',
