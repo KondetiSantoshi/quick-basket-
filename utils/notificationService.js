@@ -117,8 +117,9 @@ export const sendSMSOTP = async ({ phone, otp, purpose = 'account verification' 
   try {
     // If Twilio credentials exist in .env
     if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_PHONE_NUMBER) {
-      // Dynamic import to prevent crash if twilio is not installed
-      const twilioModule = await import('twilio');
+      // Dynamic import with webpackIgnore to prevent bundle error if twilio is not installed
+      const twilioPkg = 'twilio';
+      const twilioModule = await import(/* webpackIgnore: true */ twilioPkg);
       const client = twilioModule.default(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
       
       const message = await client.messages.create({
